@@ -3,20 +3,30 @@ const punycode = require("punycode");
 
 const tr46 = require("tr46");
 
-/*jshint unused: false */
+/* jshint unused: false */
 
 function p(char) {
   return char.codePointAt(0);
 }
 
 const specialSchemas = {
-  "ftp": 21,
-  "file": null,
-  "gopher": 70,
-  "http": 80,
-  "https": 443,
-  "ws": 80,
-  "wss": 443
+    "ftp": 21,
+    "file": null,
+    "gopher": 70,
+    "http": 80,
+    "https": 443,
+    "ws": 80,
+    "wss": 443,
+    // reThink specific schemas
+    "user": null,
+    "ctxt:": null,
+    "acct": null,
+    "user-uuid": null,
+    "domain": null,
+    "hypertity": null,
+    "hypertity-catalogue": null,
+    "hypertity-runtime": null,
+    "comm": null
 };
 
 const localSchemas = [
@@ -1084,9 +1094,9 @@ function serializeURL(url, excludeFragment) {
     output += "?" + url.query;
   }
 
-  if (!excludeFragment && url.fragment !== null) {
-    output += "#" + url.fragment;
-  }
+    if (!excludeFragment && url.fragment !== null) {
+	output += "#" + url.fragment;
+    }
 
   return output;
 }
@@ -1208,6 +1218,15 @@ const URLUtils = {
       case "https":
       case "ws":
       case "wss":
+      case "user":
+      case "ctxt":
+      case "acct":
+      case "user-uuid":
+      case "domain":
+      case "hypertity":
+      case "hypertity-catalogue":
+      case "hypertity-runtime":
+      case "comm":
         return serializeOrigin({
           scheme: url.scheme,
           host: serializeHost(url.host),
@@ -1218,6 +1237,7 @@ const URLUtils = {
         return "file://";
       default:
         // serializing an opaque identifier returns "null"
+	// <rethink> Consider here the schemas defined in reThink
         return "null";
     }
   },

@@ -61,7 +61,7 @@ function testURL(expected) {
 describe("Tests to check 'origin':", function () {
     let urls = []
     urls.push({input:"blob:https://whatwg.org/d0360e2f-caee-469f-9a2f-87d5b0456f6f", origin:"https://whatwg.org:443"})
-    
+
     // special scheme without port
     urls.push({input:"wss://rethink.org/", origin:"wss://rethink.org"})
 
@@ -103,11 +103,16 @@ describe("Tests to check 'origin':", function () {
     urls.push({input:"wss://127.0.0.1.2", error:TypeError})
     urls.push({input:"wss://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789", error:TypeError})
 
+    // reThink URLs
+    urls.push({input:"user://twitter.com/pchainho", origin:"user://twitter.com"})
+    urls.push({input:"user://cm-lisboa.pt/campo-grande-28-building", origin:"user://cm-lisboa.pt"})
+    urls.push({input:"ctxt://myhouse/energy", origin:"ctxt://myhouse"})
+    urls.push({input:"comm://telekom.de/sdruesdow-20150802006", origin:"comm://telekom.de"})
 
     for (let i=0; i<urls.length; i++) {
 	it(urls[i].input+": ", testOrigin(urls[i]))
     }
-    
+
 }
 )
 
