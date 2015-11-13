@@ -19,13 +19,18 @@ const specialSchemas = {
     "wss": 443,
     // reThink specific schemas
     "user": null,
-    "ctxt:": null,
+    "ctxt": null,
     "acct": null,
     "user-uuid": null,
     "domain": null,
-    "hypertity": null,
-    "hypertity-catalogue": null,
-    "hypertity-runtime": null,
+    "hyperty": null,
+    "hyperty-catalogue": null,
+    "hyperty-runtime": null,
+    "hyperty-runtime-uuid": null,
+    "hyperty-runtime-dev-os": null,
+    "hyperty-runtime-imei": null,
+    "hyperty-runtime-esn": null,
+    "hyperty-runtime-meid": null,
     "comm": null
 };
 
@@ -1223,9 +1228,14 @@ const URLUtils = {
       case "acct":
       case "user-uuid":
       case "domain":
-      case "hypertity":
-      case "hypertity-catalogue":
-      case "hypertity-runtime":
+      case "hyperty":
+      case "hyperty-catalogue":
+      case "hyperty-runtime":
+      case "hyperty-runtime-uuid":
+      case "hyperty-runtime-dev-os":
+      case "hyperty-runtime-imei":
+      case "hyperty-runtime-esn":
+      case "hyperty-runtime-meid":
       case "comm":
         return serializeOrigin({
           scheme: url.scheme,
@@ -1416,15 +1426,17 @@ const URLUtils = {
 };
 
 function urlToASCII(domain) {
-  try {
-    const asciiDomain = parseHost(domain);
-    if (typeof asciiDomain !== "string") {
-      return "";
+    try {
+	const asciiDomain = parseHost(domain);
+	
+	if (typeof asciiDomain !== "string") {
+	    return "";
+	}
+	
+	return asciiDomain;
+    } catch (e) {
+	return "";
     }
-    return asciiDomain;
-  } catch (e) {
-    return "";
-  }
 }
 
 function urlToUnicode(domain) {
